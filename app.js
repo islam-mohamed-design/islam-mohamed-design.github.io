@@ -169,3 +169,37 @@ if(finePointer&&motionOK()){
  t.innerHTML+=t.innerHTML;t.dataset.doubled='1';
  const st=document.createElement('style');st.textContent='@keyframes marquee{to{transform:translateX(-50%)}}';document.head.append(st);
 })();
+
+/* Welcome island: independent from the existing motion and project systems. */
+(function(){
+ const island=document.querySelector('#welcome-island');
+ if(!island)return;
+ const zone=island.closest('.welcome-zone'),message=island.querySelector('.island-message');
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)');
+ let closeTimer,autoTimer,interacted=false;
+ function sizeShell(){island.style.setProperty('--island-sx',String(136/Math.min(350,innerWidth-32)))}
+ sizeShell();addEventListener('resize',sizeShell,{passive:true});zone.hidden=false;
+ function clearClose(){clearTimeout(closeTimer)}
+ function queueClose(){clearClose();if(island.classList.contains('is-open'))closeTimer=setTimeout(()=>setOpen(false),5500)}
+ function setOpen(open){
+  clearClose();island.classList.toggle('is-open',open);
+  island.setAttribute('aria-expanded',String(open));
+  island.setAttribute('aria-label',open?'أهلاً بيك في موقع اسلام محمد. خد لفة وشوف أعمالي تحت. إخفاء رسالة الترحيب':'عرض رسالة الترحيب');
+  message.setAttribute('aria-hidden',String(!open));
+  if(open&&!island.matches(':hover,:focus-visible'))queueClose();
+ }
+ island.addEventListener('click',()=>{interacted=true;clearTimeout(autoTimer);setOpen(!island.classList.contains('is-open'))});
+ island.addEventListener('keydown',e=>{if(e.key==='Escape'){interacted=true;clearTimeout(autoTimer);setOpen(false)}});
+ island.addEventListener('pointerenter',clearClose);
+ island.addEventListener('pointerleave',queueClose);
+ island.addEventListener('focus',clearClose);
+ island.addEventListener('blur',queueClose);
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)setOpen(false)});
+ function ready(){
+  if(document.querySelector('#preloader'))return;
+  observer.disconnect();
+  autoTimer=setTimeout(()=>{if(!interacted&&!document.hidden)setOpen(true)},reduce.matches?600:500);
+ }
+ const observer=new MutationObserver(ready);
+ observer.observe(document.body,{childList:true});ready();
+})();
