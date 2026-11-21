@@ -263,5 +263,17 @@
       "assets/medical-designs-01-160c9ed1.jpg"
     ],
     "number": "20"
+  },
+  {
+    "id": "cosmetics-skincare",
+    "title": "مستحضرات تجميل وعناية",
+    "tag": "تجميل وعناية",
+    "category": "beauty",
+    "images": [
+      "assets/cosmetics-skincare-01-4a40e3c1.jpg",
+      "assets/cosmetics-skincare-02-48e8b4ce.jpg",
+      "assets/cosmetics-skincare-03-d4aba1cb.jpg"
+    ],
+    "number": "21"
   }
 ]
