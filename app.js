@@ -138,7 +138,7 @@ if(finePointer&&motionOK()){
    const rx=(0.5-py)*5,ry=(px-0.5)*6;
    v.style.transform='perspective(800px) rotateX('+rx+'deg) rotateY('+ry+'deg)';
    const cover=v.querySelector('.project-cover'),back=v.querySelector('.project-back'),side=v.querySelector('.project-side');
-   if(cover)cover.style.transform='translate('+(px-0.5)*-10+'px,'+(py-0.5)*-10+'px) translateY(-5px) scale(1.025)';
+   if(cover)cover.style.transform='translate('+(px-0.5)*-10+'px,'+(py-0.5)*-10+'px) scale(1.06)';
    if(back)back.style.transform='rotate(-13deg) translate('+(px-0.5)*6+'px,'+(py-0.5)*6+'px)';
    if(side)side.style.transform='rotate(13deg) translate('+(px-0.5)*9+'px,'+(py-0.5)*9+'px)';
   });
