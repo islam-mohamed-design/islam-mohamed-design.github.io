@@ -203,3 +203,7 @@ if(finePointer&&motionOK()){
  const observer=new MutationObserver(ready);
  observer.observe(document.body,{childList:true});ready();
 })();
+
+/* Release the hero headline reveal once the preloader is gone */
+(function(){const root=document.documentElement;function go(){if(document.querySelector('#preloader'))return;root.classList.add('hero-go');mo.disconnect()}
+const mo=new MutationObserver(go);mo.observe(document.body,{childList:true});go()})();
