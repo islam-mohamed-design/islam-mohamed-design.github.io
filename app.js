@@ -26,7 +26,7 @@ document.querySelector('.image-prev').onclick=()=>{index=(index-1+selected.image
 lb.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){index=(index-1+selected.images.length)%selected.images.length;showImage();e.preventDefault()}if(e.key==='ArrowLeft'){index=(index+1)%selected.images.length;showImage();e.preventDefault()}});
 for(const d of [pd,lb])d.addEventListener('click',e=>{const r=d.getBoundingClientRect();if(e.target===d&&(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom))d.close()});
 document.querySelector('#year').textContent=new Date().getFullYear();
-fetch("projects.json?v=motion-2").then(r=>{if(!r.ok)throw new Error("projects.json "+r.status);return r.json()}).then(data=>{
+fetch("projects.json?v=motion-2",{cache:"no-cache"}).then(r=>{if(!r.ok)throw new Error("projects.json "+r.status);return r.json()}).then(data=>{
  projects=data;
  const statics=projects.filter(p=>!p.video);
  statics.forEach((p,i)=>{if(!p.number)p.number=String(i+1).padStart(2,"0")});
