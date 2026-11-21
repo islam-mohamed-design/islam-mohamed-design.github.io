@@ -3,7 +3,7 @@ let projects = [];
 const grid=document.querySelector('#projects'),pd=document.querySelector('#project-dialog'),lb=document.querySelector('#lightbox');
 let selected=null,index=0;
 function render(filter='all'){
- const visible=projects.filter(p=>filter==='all'||p.category===filter);
+ const visible=projects.filter(p=>!p.video&&(filter==='all'||p.category===filter));
  grid.replaceChildren(...visible.map(p=>{
   const b=document.createElement('button');b.className='project-card';b.setAttribute('aria-label','عرض مشروع '+p.title+'، '+p.images.length+' تصميم');
   const count=p.images.length;
@@ -28,10 +28,36 @@ for(const d of [pd,lb])d.addEventListener('click',e=>{const r=d.getBoundingClien
 document.querySelector('#year').textContent=new Date().getFullYear();
 fetch("projects.json").then(r=>{if(!r.ok)throw new Error("projects.json "+r.status);return r.json()}).then(data=>{
  projects=data;
- projects.forEach((p,i)=>{if(!p.number)p.number=String(i+1).padStart(2,"0")});
- const allCount=document.querySelector("[data-filter=\"all\"] small");if(allCount)allCount.textContent=projects.length;
+ const statics=projects.filter(p=>!p.video);
+ statics.forEach((p,i)=>{if(!p.number)p.number=String(i+1).padStart(2,"0")});
+ const allCount=document.querySelector("[data-filter=\"all\"] small");if(allCount)allCount.textContent=statics.length;
  render();
+ renderMotion();
 }).catch(err=>console.error("Could not load projects.json",err));
+
+function renderMotion(){
+ const list=document.querySelector("#motion-list");if(!list)return;
+ const vids=projects.filter(p=>p.video);
+ list.replaceChildren(...vids.map(p=>{
+  const shell=document.createElement("div");shell.className="video-shell";
+  const v=document.createElement("video");v.controls=true;v.playsInline=true;v.preload="metadata";
+  if(p.poster)v.poster=p.poster;
+  v.setAttribute("aria-label","فيديو موشن جرافيك لـ"+p.title);
+  const s=document.createElement("source");s.src=p.video;s.type="video/mp4";
+  v.append(s,"متصفحك لا يدعم الفيديو.");
+  const cap=document.createElement("div");cap.className="video-caption";
+  const c1=document.createElement("span");c1.textContent="MOTION GRAPHICS";
+  const c2=document.createElement("span");c2.textContent=p.title+" ";
+  const arrow=document.createElement("i");arrow.textContent="↗";c2.append(arrow);
+  cap.append(c1,c2);shell.append(v,cap);return shell;
+ }));
+ if(motionOK()&&"IntersectionObserver"in window){
+  const shells=[...list.querySelectorAll(".video-shell")];
+  shells.forEach((el,i)=>{el.classList.add("rv");el.style.setProperty("--rvd",(i%3)*70+"ms")});
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("rv-in");io.unobserve(e.target)}}),{threshold:.1,rootMargin:"0px 0px 30px 0px"});
+  shells.forEach(el=>io.observe(el));
+ }
+}
 
 function addComparison(p,g){
  if(!p.comparison)return;
