@@ -506,7 +506,10 @@
     "tag": "موشن جرافيك",
     "category": "motion",
     "video": "assets/banoon-motion.mp4",
-    "poster": "assets/banoon-02-4e028ec6.jpg"
+    "poster": "assets/banoon-02-4e028ec6.jpg",
+    "images": [
+      "assets/banoon-02-4e028ec6.jpg"
+    ]
   },
   {
     "id": "se-sayed-motion",
@@ -514,7 +517,10 @@
     "tag": "موشن جرافيك",
     "category": "motion",
     "video": "assets/18-se-sayed-motion.mp4",
-    "poster": "assets/15-se-sayed-motion-poster.jpg"
+    "poster": "assets/15-se-sayed-motion-poster.jpg",
+    "images": [
+      "assets/15-se-sayed-motion-poster.jpg"
+    ]
   },
   {
     "id": "qushtutuh-algeria-motion",
@@ -522,7 +528,10 @@
     "tag": "موشن جرافيك",
     "category": "motion",
     "video": "assets/19-qushtutuh-algeria-motion.mp4",
-    "poster": "assets/16-qushtutuh-algeria-motion-poster.jpg"
+    "poster": "assets/16-qushtutuh-algeria-motion-poster.jpg",
+    "images": [
+      "assets/16-qushtutuh-algeria-motion-poster.jpg"
+    ]
   },
   {
     "id": "moon-island-motion",
@@ -530,6 +539,9 @@
     "tag": "موشن جرافيك",
     "category": "motion",
     "video": "assets/20-moon-island-motion.mp4",
-    "poster": "assets/17-moon-island-motion-poster.jpg"
-  }
+    "poster": "assets/17-moon-island-motion-poster.jpg",
+    "images": [
+      "assets/17-moon-island-motion-poster.jpg"
     ]
+  }
+]
