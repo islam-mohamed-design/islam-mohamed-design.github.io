@@ -129,23 +129,37 @@ dialog[open]{animation:dialog-in .34s cubic-bezier(.16,1,.3,1)}dialog::backdrop{
 }
 @media(prefers-reduced-motion:reduce){.project-card:hover .project-cover{transform:none}}
 
-/* Welcome island: a separate top lane keeps the navigation clear. */
+/* Welcome island: frosted-glass capsule carrying the im monogram, in its own top lane clear of the navigation. */
 .welcome-zone{height:104px;position:relative;isolation:isolate}
 .welcome-zone[hidden]{display:none}
 .welcome-island{--island-width:min(350px,calc(100vw - 32px));position:absolute;inset-block-start:14px;inset-inline-start:50%;transform:translateX(50%);width:136px;height:44px;padding:0;border:0;background:transparent;z-index:5;color:var(--ink);border-radius:999px;touch-action:manipulation}
-.welcome-island.is-open{width:var(--island-width);height:84px;border-radius:30px}
-.island-shell{position:absolute;left:50%;top:0;width:var(--island-width);height:84px;margin-left:calc(var(--island-width) / -2);border-radius:999px;background:#07080a;border:1px solid #d9f87135;box-shadow:0 10px 32px #0006,inset 0 1px 0 #ffffff0c;transform:scale(var(--island-sx,.389),.524);transform-origin:50% 0;transition:transform .65s cubic-bezier(.22,1.3,.36,1);pointer-events:none}
+.welcome-island.is-open{width:var(--island-width);height:84px}
+.welcome-island:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.island-shell{position:absolute;left:50%;top:0;width:var(--island-width);height:84px;margin-left:calc(var(--island-width) / -2);border-radius:999px;background:linear-gradient(180deg,#ffffff0d,transparent 45%),linear-gradient(165deg,#262930d1,#0a0b0ee8);backdrop-filter:blur(18px) saturate(1.5);-webkit-backdrop-filter:blur(18px) saturate(1.5);box-shadow:0 18px 48px #0009,0 3px 18px #d9f87114,inset 0 1px 0 #ffffff24,inset 0 -1px 0 #00000073;transform:scale(var(--island-sx,.389),.524);transform-origin:50% 0;transition:transform .65s cubic-bezier(.22,1.3,.36,1),background .3s;pointer-events:none}
+.island-shell:before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(140deg,#d9f87173,#ffffff2e 30%,#ffffff0a 55%,#d9f87140 88%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude}
+.island-shell:after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(65% 130% at 50% -25%,#d9f8712b,transparent 62%);opacity:.5;animation:island-glow 4.6s ease-in-out infinite}
+.island-shine{position:absolute;inset:0;border-radius:inherit;overflow:hidden}
+.island-shine:before{content:'';position:absolute;top:-45%;bottom:-45%;left:-65%;width:42%;background:linear-gradient(100deg,transparent,#ffffff0f 42%,#d9f87121 58%,transparent);transform:skewX(-16deg);animation:island-shine 7s ease-in-out infinite}
 .is-open .island-shell{transform:scale(1)}
-.island-peek{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:10px;font-size:12px;font-weight:700;white-space:nowrap;transition:opacity .16s,transform .3s;pointer-events:none}
-.island-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px #d9f87165}
-.island-spark{color:var(--accent);font:19px Arial}
+.is-open .island-shell:before{background:linear-gradient(140deg,#d9f8718c,#ffffff33 30%,#ffffff0d 55%,#d9f87152 88%)}
+.welcome-island:hover .island-shell{background:linear-gradient(180deg,#ffffff12,transparent 45%),linear-gradient(165deg,#2c2f38d1,#0c0d11e8)}
+.island-peek{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:9px;font-size:12px;font-weight:700;white-space:nowrap;transition:opacity .16s,transform .3s;pointer-events:none}
+.island-peek-text{text-shadow:0 1px 8px #000a}
+.island-mark{direction:ltr;font-family:Arial,sans-serif;font-size:16px;font-weight:900;letter-spacing:-2.6px;line-height:1;padding-right:3px;position:relative;color:var(--ink)}
+.island-mark span{font-size:13px}
+.island-mark i{width:3px;height:3px;background:var(--accent);position:absolute;right:-1px;bottom:1px;box-shadow:0 0 6px #d9f87199}
+.mark-lg{font-size:27px;letter-spacing:-4.4px;padding-right:5px;align-self:center}
+.mark-lg span{font-size:21px}
+.mark-lg i{width:4px;height:4px;right:-1px;bottom:1px;box-shadow:0 0 10px #d9f871a6}
 .is-open .island-peek{opacity:0;transform:translateY(-8px) scale(.9)}
-.island-message{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:12px;padding:12px 17px;text-align:right;white-space:nowrap;opacity:0;transform:translateY(8px) scale(.92);transition:opacity .15s,transform .25s;pointer-events:none;visibility:hidden}
+.island-message{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:13px;padding:12px 17px;text-align:right;white-space:nowrap;opacity:0;transform:translateY(8px) scale(.92);transition:opacity .15s,transform .25s;pointer-events:none;visibility:hidden}
 .is-open .island-message{opacity:1;transform:none;visibility:visible;transition:opacity .25s .12s,transform .5s .06s}
 .island-message strong{display:block;font-size:13px;font-weight:700;line-height:1.9}
-.island-message small{display:block;font-size:11px;color:var(--muted);line-height:1.9}
+.island-message small{display:block;font-size:11px;color:#b0b1ac;line-height:1.9}
 .island-message small span{color:var(--accent);margin-inline-start:5px}
-.island-wave{color:var(--accent);font:30px/1 Arial,sans-serif;transform:rotate(-12deg)}
-.island-close{align-self:flex-start;color:var(--accent);font:18px Arial;margin-inline-start:auto}
-@media(max-width:370px){.island-message{gap:8px;padding-inline:13px}.island-message strong{font-size:11px}.island-message small{font-size:10px}.island-wave{font-size:22px}}
-@media(prefers-reduced-motion:reduce){.island-shell,.island-peek,.island-message{transition:none!important}}
+.island-close{align-self:center;flex-shrink:0;width:26px;height:26px;display:grid;place-items:center;border:1px solid #ffffff21;border-radius:50%;color:var(--muted);font:15px/1 Arial;margin-inline-start:auto;transition:color .2s,border-color .2s}
+.welcome-island:hover .island-close{color:var(--accent);border-color:#d9f87155}
+@media(max-width:370px){.island-message{gap:9px;padding-inline:13px}.island-message strong{font-size:11px}.island-message small{font-size:10px}.mark-lg{font-size:22px;letter-spacing:-3.6px}.mark-lg span{font-size:17px}}
+@media(prefers-reduced-motion:reduce){.island-shell,.island-peek,.island-message{transition:none!important}.island-shell:after,.island-shine:before{animation:none!important}}
+@keyframes island-glow{0%,100%{opacity:.35}50%{opacity:.8}}
+@keyframes island-shine{0%,58%{left:-65%}88%,100%{left:135%}}
