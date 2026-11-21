@@ -128,3 +128,24 @@ dialog[open]{animation:dialog-in .34s cubic-bezier(.16,1,.3,1)}dialog::backdrop{
  .gallery-grid{grid-template-columns:1fr}
 }
 @media(prefers-reduced-motion:reduce){.project-card:hover .project-cover{transform:none}}
+
+/* Welcome island: a separate top lane keeps the navigation clear. */
+.welcome-zone{height:104px;position:relative;isolation:isolate}
+.welcome-zone[hidden]{display:none}
+.welcome-island{--island-width:min(350px,calc(100vw - 32px));position:absolute;inset-block-start:14px;inset-inline-start:50%;transform:translateX(50%);width:136px;height:44px;padding:0;border:0;background:transparent;z-index:5;color:var(--ink);border-radius:999px;touch-action:manipulation}
+.welcome-island.is-open{width:var(--island-width);height:84px;border-radius:30px}
+.island-shell{position:absolute;left:50%;top:0;width:var(--island-width);height:84px;margin-left:calc(var(--island-width) / -2);border-radius:999px;background:#07080a;border:1px solid #d9f87135;box-shadow:0 10px 32px #0006,inset 0 1px 0 #ffffff0c;transform:scale(var(--island-sx,.389),.524);transform-origin:50% 0;transition:transform .65s cubic-bezier(.22,1.3,.36,1);pointer-events:none}
+.is-open .island-shell{transform:scale(1)}
+.island-peek{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:10px;font-size:12px;font-weight:700;white-space:nowrap;transition:opacity .16s,transform .3s;pointer-events:none}
+.island-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 10px #d9f87165}
+.island-spark{color:var(--accent);font:19px Arial}
+.is-open .island-peek{opacity:0;transform:translateY(-8px) scale(.9)}
+.island-message{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:12px;padding:12px 17px;text-align:right;white-space:nowrap;opacity:0;transform:translateY(8px) scale(.92);transition:opacity .15s,transform .25s;pointer-events:none;visibility:hidden}
+.is-open .island-message{opacity:1;transform:none;visibility:visible;transition:opacity .25s .12s,transform .5s .06s}
+.island-message strong{display:block;font-size:13px;font-weight:700;line-height:1.9}
+.island-message small{display:block;font-size:11px;color:var(--muted);line-height:1.9}
+.island-message small span{color:var(--accent);margin-inline-start:5px}
+.island-wave{color:var(--accent);font:30px/1 Arial,sans-serif;transform:rotate(-12deg)}
+.island-close{align-self:flex-start;color:var(--accent);font:18px Arial;margin-inline-start:auto}
+@media(max-width:370px){.island-message{gap:8px;padding-inline:13px}.island-message strong{font-size:11px}.island-message small{font-size:10px}.island-wave{font-size:22px}}
+@media(prefers-reduced-motion:reduce){.island-shell,.island-peek,.island-message{transition:none!important}}
