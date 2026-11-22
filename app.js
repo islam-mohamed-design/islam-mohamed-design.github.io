@@ -238,3 +238,49 @@ if(finePointer&&motionOK()){
 /* Release the hero headline reveal once the preloader is gone */
 (function(){const root=document.documentElement;function go(){if(document.querySelector('#preloader'))return;root.classList.add('hero-go');mo.disconnect()}
 const mo=new MutationObserver(go);mo.observe(document.body,{childList:true});go()})();
+
+
+/* ===== Cairo LED clock + Gregorian/Hijri dates ===== */
+(function(){
+ const host=document.getElementById('led-time');if(!host)return;
+ const TZ='Africa/Cairo';
+ const SEG={a:'20,1 56,1 63,7 56,13 20,13 13,7',g:'20,69 56,69 63,75 56,81 20,81 13,75',d:'20,137 56,137 63,143 56,149 20,149 13,143',f:'1,21 7,14 13,21 13,61 7,68 1,61',b:'63,21 69,14 75,21 75,61 69,68 63,61',e:'1,89 7,82 13,89 13,129 7,136 1,129',c:'63,89 69,82 75,89 75,129 69,136 63,129'};
+ const MAP={'0':'abcdef','1':'bc','2':'abged','3':'abgcd','4':'fbgc','5':'afgcd','6':'afgedc','7':'abc','8':'abcdefg','9':'abcdfg'};
+ const NS='http://www.w3.org/2000/svg';
+ function mkDigit(){
+  const s=document.createElementNS(NS,'svg');s.setAttribute('viewBox','0 0 76 150');s.setAttribute('class','led-digit');s.setAttribute('aria-hidden','true');
+  for(const k of Object.keys(SEG)){const poly=document.createElementNS(NS,'polygon');poly.setAttribute('points',SEG[k]);poly.setAttribute('class','seg');poly.dataset.s=k;s.append(poly)}
+  return s;
+ }
+ function mkColon(){
+  const s=document.createElementNS(NS,'svg');s.setAttribute('viewBox','0 0 20 150');s.setAttribute('class','led-colon');s.setAttribute('aria-hidden','true');
+  for(const y of [52,90]){const r=document.createElementNS(NS,'rect');r.setAttribute('x',5);r.setAttribute('y',y);r.setAttribute('width',10);r.setAttribute('height',10);r.setAttribute('rx',2);s.append(r)}
+  return s;
+ }
+ const timeFmt=new Intl.DateTimeFormat('en-GB',{timeZone:TZ,hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+ const dayFmt=new Intl.DateTimeFormat('en-CA',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit'});
+ const gregFmt=new Intl.DateTimeFormat('ar-EG',{timeZone:TZ,weekday:'long',day:'numeric',month:'long',year:'numeric'});
+ const hijriFmt=new Intl.DateTimeFormat('ar-EG-u-ca-islamic-umalqura',{timeZone:TZ,day:'numeric',month:'long',year:'numeric'});
+ const units=[];
+ for(let i=0;i<8;i++){
+  if(i===2||i===5){host.append(mkColon());continue}
+  let d=mkDigit();
+  if(i===6){const w=document.createElement('span');w.className='led-sec';w.append(d);host.append(w)}
+  else if(i===7){host.querySelector('.led-sec').append(d)}
+  else host.append(d);
+  units.push(d);
+ }
+ const period=document.createElement('span');period.className='led-period';host.append(period);
+ const gregEl=document.getElementById('date-greg'),hijriEl=document.getElementById('date-hijri');
+ let lastDay='';
+ function setDigit(svg,ch){const on=MAP[ch]||'';svg.querySelectorAll('polygon').forEach(p=>p.classList.toggle('on',on.indexOf(p.dataset.s)>=0))}
+ function tick(){
+  const now=new Date(),t=timeFmt.format(now);
+  const h24=+t.slice(0,2),str=String(h24%12||12).padStart(2,'0')+t.slice(3,5)+t.slice(6,8);
+  for(let i=0;i<6;i++)setDigit(units[i],str[i]);
+  period.textContent=h24<12?'ص':'م';
+  const day=dayFmt.format(now);
+  if(day!==lastDay){lastDay=day;gregEl.textContent=gregFmt.format(now);hijriEl.textContent=hijriFmt.format(now)}
+ }
+ tick();setInterval(tick,250);
+})();
