@@ -240,7 +240,7 @@ if(finePointer&&motionOK()){
 const mo=new MutationObserver(go);mo.observe(document.body,{childList:true});go()})();
 
 
-/* ===== Cairo LED clock + Gregorian/Hijri dates ===== */
+/* ===== Cairo LED clock + Gregorian/Hijri dates (compact flip) ===== */
 (function(){
  const host=document.getElementById('led-time');if(!host)return;
  const TZ='Africa/Cairo';
@@ -272,6 +272,7 @@ const mo=new MutationObserver(go);mo.observe(document.body,{childList:true});go(
  }
  const period=document.createElement('span');period.className='led-period';host.append(period);
  const gregEl=document.getElementById('date-greg'),hijriEl=document.getElementById('date-hijri');
+ const viewTime=document.querySelector('.view-time'),viewDate=document.querySelector('.view-date');
  let lastDay='';
  function setDigit(svg,ch){const on=MAP[ch]||'';svg.querySelectorAll('polygon').forEach(p=>p.classList.toggle('on',on.indexOf(p.dataset.s)>=0))}
  function tick(){
@@ -281,6 +282,9 @@ const mo=new MutationObserver(go);mo.observe(document.body,{childList:true});go(
   period.textContent=h24<12?'ص':'م';
   const day=dayFmt.format(now);
   if(day!==lastDay){lastDay=day;gregEl.textContent=gregFmt.format(now);hijriEl.textContent=hijriFmt.format(now)}
+  const showDate=Math.floor(Date.now()/1000)%8>=5;
+  viewTime.classList.toggle('active',!showDate);
+  viewDate.classList.toggle('active',showDate);
  }
  tick();setInterval(tick,250);
 })();
