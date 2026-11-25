@@ -501,6 +501,44 @@
     ]
   },
   {
+    "id": "sukkara",
+    "title": "سُكّرة | سوشيال ميديا",
+    "tag": "حلويات",
+    "category": "food",
+    "images": [
+      "assets/sukkara-01-082fe1d8.jpg",
+      "assets/sukkara-02-d8653eb1.jpg",
+      "assets/sukkara-03-ced1ff7e.jpg",
+      "assets/sukkara-04-d828cf36.jpg"
+    ]
+  },
+  {
+    "id": "tannour",
+    "title": "تنّور | سوشيال ميديا",
+    "tag": "بيتزا ومعجنات",
+    "category": "food",
+    "images": [
+      "assets/tannour-01-542a52e3.jpg",
+      "assets/tannour-02-2e648b97.jpg",
+      "assets/tannour-03-5e1417b8.jpg",
+      "assets/tannour-04-100b41a8.jpg"
+    ]
+  },
+  {
+    "id": "lo2ma",
+    "title": "لُقمة | سوشيال ميديا",
+    "tag": "فاست فود",
+    "category": "food",
+    "images": [
+      "assets/lo2ma-01-c3f8a2a9.jpg",
+      "assets/lo2ma-02-98b952d0.jpg",
+      "assets/lo2ma-03-1359b32c.jpg",
+      "assets/lo2ma-04-d78c22ad.jpg",
+      "assets/lo2ma-05-da029070.jpg",
+      "assets/lo2ma-06-f1de81db.jpg"
+    ]
+  },
+  {
     "id": "banoon-motion",
     "title": "بنون كلينك",
     "tag": "موشن جرافيك",
